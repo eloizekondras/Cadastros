@@ -1,0 +1,32 @@
+<h1>Todos os produtos cadastrados:</h1>
+<ul class="produto-lista">
+  {{#if nenhumProduto}}
+    <p>Não há produtos cadastrados</p>
+  {{else}}
+    {{#each produtos}}
+      <li>
+        {{#if this.concluida}}
+          <a href="/produtos/editar/{{this.id}}" class="nome concluida">{{this.nome}}</a>
+        {{else}}
+          <a href="/produtos/editar/{{this.id}}" class="nome">{{this.nome}}</a>
+        {{/if}}
+        <span class="actions">
+          <form action="/produtos/atualizarstatus" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <input type="hidden" name="concluida" value="{{this.concluida}}">
+            <button type="submit">
+              <i class="bi bi-check2"></i>
+            </button>
+          </form>
+          <a href="/produtos/editar/{{this.id}}"><i class="bi bi-pencil-square"></i></a>
+          <form action="/produtos/remover" method="POST">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <button type="submit">
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </form>
+        </span>
+      </li>
+    {{/each}}
+  {{/if}}
+</ul>

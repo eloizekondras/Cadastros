@@ -1,0 +1,58 @@
+<h1 style="text-align: center;">Editando produto: {{produto.nome}}</h1>
+<div style="display: flex; justify-content: center;">
+  <form action="/produtos/editar" method="POST" style="max-width: 400px; width: 100%;">
+    <input type="hidden" name="id" value="{{produto.id}}">
+
+    <div class="form-control">
+      <label for="nome">Nome:</label>
+      <input type="text" name="nome" id="nome" value="{{produto.nome}}" required>
+    </div>
+
+    <div class="form-control">
+      <label for="descricao">Descrição:</label>
+      <textarea name="descricao" id="descricao" required>{{produto.descricao}}</textarea>
+    </div>
+
+    <div class="form-control">
+      <label for="quantidade">Quantidade:</label>
+      <input type="number" name="quantidade" id="quantidade" value="{{produto.quantidade}}" required>
+    </div>
+
+    <div class="form-control">
+      <label for="precoUnitario">Preço Unitário (R$):</label> <!-- Corrigido para "precoUnitario" -->
+      <input type="number" step="0.01" name="precoUnitario" id="precoUnitario" value="{{produto.precoUnitario}}"
+        required>
+    </div>
+
+    <div class="form-control">
+      <label for="valorTotal">Valor Total (R$):</label>
+      <input type="text" id="valorTotal" name="valorTotal" value="" readonly>
+    </div>
+
+    <div class="form-control">
+      <label for="categoria">Categoria:</label>
+      <input type="text" name="categoria" id="categoria" value="{{produto.categoria}}" required>
+    </div>
+
+    <input type="submit" value="Salvar Alterações">
+  </form>
+</div>
+
+<script>
+  const quantidade = document.getElementById('quantidade');
+  const precoUnitario = document.getElementById('precoUnitario'); // Usando o ID correto aqui
+  const valorTotal = document.getElementById('valorTotal');
+
+  function atualizarValorTotal() {
+    const qtde = parseFloat(quantidade.value) || 0;
+    const preco = parseFloat(precoUnitario.value) || 0;
+    const total = qtde * preco;
+
+    valorTotal.value = total.toFixed(2);
+  }
+
+  quantidade.addEventListener('input', atualizarValorTotal);
+  precoUnitario.addEventListener('input', atualizarValorTotal);
+
+  window.addEventListener('DOMContentLoaded', atualizarValorTotal);
+</script>
